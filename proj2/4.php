@@ -9,7 +9,9 @@
                 <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Year</b></td>
                 <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Rent Date</b></td>
                 <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Rent Days</b></td>
-                <td><img src="img/blank.gif" alt="" width="10" height="25"></td>
+		<td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>VIP Start Date</b></td>
+                <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Discount</b></td>      
+		<td><img src="img/blank.gif" alt="" width="10" height="25"></td>
             </tr>
             <?php
                 include "dbConn.php";
@@ -64,9 +66,10 @@
 		    mysql_query("INSERT IGNORE INTO VIP (ssn, start_date, discount) VALUES($SSN, '$vipdate', $Discount)");
 		    mysql_query("INSERT IGNORE INTO Rent (ssn, title, year) VALUES($SSN, '$Title', $Year)");
 		    echo "INSERT IGNORE INTO Rent (ssn, title, year) VALUES($SSN, '$Title', $Year)";
+		    echo "INSERT IGNORE INTO VIP (ssn, start_date, discount) VALUES($SSN,'$vipDate',$Discount )";
 		  }
 
-		   $result = mysql_query("SELECT Rent.ssn as ssn, title, year, rdate, rday, name FROM Rent, VIP, Customer Where Rent.ssn = VIP.ssn AND VIP.ssn =Customer.ssn ORDER BY rdate");
+		   $result = mysql_query("SELECT Rent.ssn as ssn, name, title, year, rdate, rday, start_date, discount FROM Rent, VIP, Customer Where Rent.ssn = VIP.ssn AND VIP.ssn =Customer.ssn ORDER BY rdate");
 		   $i = 0;
 		   if($result === false){
 		         throw new Exception(mysql_error($connection));
@@ -78,7 +81,9 @@
 		         echo "<td>".$row['title']."</td>";
 		         echo "<td>".$row['year']."</td>";
 		         echo "<td>".$row['rdate']."</td>";
-		         echo "<td>".$row['rday']."</td>";
+			 echo "<td>".$row['rday']."</td>";
+			 echo "<td>".$row['start_date']."</td>";
+			 echo "<td>".$row['discount']."</td>";
 		         echo "</td>";
 		         echo "</tr>";
 		      $i++;
