@@ -10,25 +10,25 @@
             <?php
                 include "dbConn.php";
                 error_reporting(E_ALL ^ E_NOTICE);
-                if ($_REQUEST['name'] != "" ) {
+                if ($_REQUEST['artist'] != "" ) {
                     if ($_REQUEST['address'] == "") {
                         $Address = "NULL";
                     } else {
                         $Address = mysql_real_escape_string($_REQUEST['address']);
                     }
-                    $Name = mysql_real_escape_string($_REQUEST['name']);
-                    mysql_query("INSERT IGNORE INTO Producer (name, address) VALUES('$Name','$Address')");
-                    echo "INSERT INTO Producer (name, address) VALUES('$Name','$Address')";
+                    $Name = mysql_real_escape_string($_REQUEST['artist']);
+                    mysql_query("INSERT IGNORE INTO Producer (artist, address) VALUES('$Name','$Address')");
+                    echo "INSERT INTO Producer (artist, address) VALUES('$Name','$Address')";
                 }
 
-		$result = mysql_query("SELECT name, address FROM Producer ORDER BY name");
+		$result = mysql_query("SELECT artist, address FROM Producer ORDER BY artist");
 		$i = 0;
 		if($result === false){
 	                    throw new Exception(mysql_error($connection));
                    }
        	        while ($row = mysql_fetch_array($result)) {
 		              echo "<tr valign='middle'>";
-                              echo "<td>".$row['name']."</td>";
+                              echo "<td>".$row['artist']."</td>";
   		       	      echo "<td>".$row['address']."</td>";
 			      echo "</td>";
 			      echo "</tr>";
@@ -41,7 +41,7 @@
         <h3>Add Producer</h3>
         <form action="<?php echo basename($_SERVER['PHP_SELF']); ?>" method="get">
             <table border="0" cellpadding="0" cellspacing="0">
-                <tr><td>Name:</td><td><input type="text" size="30" name="name"></td></tr>
+                <tr><td>Name:</td><td><input type="text" size="30" name="artist"></td></tr>
                 <tr><td>Address:</td><td> <input type="text" size="30" name="address"></td></tr>
                 <tr><td>&nbsp;</td><td><input type="submit" value="Add Producer"></td></tr>
             </table>

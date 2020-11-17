@@ -18,10 +18,10 @@
                             $Producer = mysql_real_escape_string($_REQUEST['artist']);
 	                    $Supplier = mysql_real_escape_string($_REQUEST['name']);
 	                    mysql_query("INSERT IGNORE INTO CD (title, year) VALUES('$Title','$Year')");
-	                    mysql_query("INSERT IGNORE INTO Producer (name) VALUES('$Producer')");
+	                    mysql_query("INSERT IGNORE INTO Producer (artist) VALUES('$Producer')");
 	                    mysql_query("INSERT IGNORE INTO Supplier (name) VALUES('$Supplier')");
-	                    mysql_query("INSERT IGNORE INTO Supply (name, title, year) VALUES('$Supplier','$Title','$Year')");
-	                    mysql_query("INSERT IGNORE INTO Produce (artist, title, year) VALUES('$Producer','$Title','$Year')");
+	                    mysql_query("INSERT IGNORE INTO Supplied (name, title, year) VALUES('$Supplier','$Title','$Year')");
+	                    mysql_query("INSERT IGNORE INTO Produced (artist, title, year) VALUES('$Producer','$Title','$Year')");
                             echo "INSERT INTO Supplied (name, title, year) VALUES('$Supplier','$Title','$Year')";
                             echo "INSERT INTO Produced (artist, title, year) VALUES('$Producer','$Title','$Year')";
 	                }

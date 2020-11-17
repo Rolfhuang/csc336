@@ -5,7 +5,8 @@
             <tr bgcolor="#f87820">
                 <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>SSN</b></td>
                 <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Name</b></td>
-                <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Title</b></td>
+		<td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Title</b></td>
+		 <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Telephone</b></td>
                 <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Year</b></td>
                 <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Rent Date</b></td>
                 <td class=tabhead><img src="img/blank.gif" alt="" width="200" height="6"><br><b>Rent days</b></td>
@@ -23,7 +24,7 @@
                         $Name = mysql_real_escape_string($_REQUEST['name']);
                     }
 
-		    if ($_REQUEST['date'] == "") {
+		    if ($_REQUEST['rdate'] == "") {
 		        $date = date("Y-m-d");
 		    } 
 		    else {
@@ -49,26 +50,28 @@
                     $Year = intval($_REQUEST['year']);
 	    
                     mysql_query("INSERT IGNORE INTO CD (title,year) VALUES('$Title', $Year)");
-                    mysql_query("INSERT IGNORE INTO Customer (ssn, name, telephone, rdate, rday) VALUES($SSN,'$Name','$Address', '$Telephone', '$date', $RentingTime)");
+                    mysql_query("INSERT IGNORE INTO Customer (ssn, name, telephone, rdate, rday) VALUES($SSN,'$Name','$Telephone', '$date', $RentingTime)");
                     mysql_query("INSERT IGNORE INTO Rent (ssn, title, year) VALUES($SSN, '$Title', $Year)");
-                    echo "INSERT IGNORE INTO Rent (ssn, title, year) VALUES($SSN, '$Title', $Year)";
+		    echo "INSERT IGNORE INTO Rent (ssn, title, year) VALUES($SSN, '$Title', $Year)";
+		    echo "INSERT IGNORE INTO Customer (ssn, name, telephone, rdate, rday) VALUES($SSN, '$Name', '$Telephone', '$date', $RentingTime)";
        }
-
-                    $result = mysql_query("SELECT Rent.ssn as ssn, title, year, rdate, rday, Name FROM Rent, Customer Where Rent.ssn = Customer.ssn ORDER BY rdate");
+                    $result = mysql_query("SELECT Rent.ssn as ssn,name, title, telephone, year,  rdate, rday FROM Rent, Customer Where Rent.ssn = Customer.ssn ORDER BY rdate");
                     $i = 0;
                     if($result === false){
-	                    throw new Exception(mysql_error($connection));							                   }
+			    throw new Exception(mysql_error($connection));							                  
+		    }
                     while ($row = mysql_fetch_array($result)) {
 	                    echo "<tr valign='middle'>";
 	                    echo "<td>".$row['ssn']."</td>";
-	                    echo "<td>".$row['name']."</td>";
-	                    echo "<td>".$row['nitle']."</td>";
+			    echo "<td>".$row['name']."</td>";
+			    echo "<td>".$row['title']."</td>";
+	                    echo "<td>".$row['telephone']."</td>";
 	                    echo "<td>".$row['year']."</td>";
 	                    echo "<td>".$row['rdate']."</td>";
 	                    echo "<td>".$row['rday']."</td>";
 	                    echo "</td>";
 	                    echo "</tr>";
-                          $i++;
+                            $i++;
                        }
 	   ?>
         </table>

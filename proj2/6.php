@@ -15,14 +15,15 @@
                     $Year = mysql_real_escape_string($_REQUEST['year']);
                     $Artist = mysql_real_escape_string($_REQUEST['artist']);
 
-                    $result = mysql_query("SELECT DISTINCT name, address FROM (Produced NATURAL JOIN Producer) NATURAL JOIN (SELECT title, year FROM Song NATURAL JOIN CD WHERE artist = '$Artist' AND title = '$Title' AND year = $Year) B");
-                    $i = 0;
+                    //$result = mysql_query("SELECT DISTINCT artist, address FROM (Produced NATURAL JOIN Producer) NATURAL JOIN (SELECT title, year FROM Song NATURAL JOIN CD WHERE artist = '$Artist' AND title = '$Title' AND year = $Year)");
+		    $result = mysql_query("SELECT DISTINCT artist, address FROM (Produced NATURAL JOIN Producer) NATURAL JOIN (SELECT title, year FROM Produced NATURAL JOIN CD WHERE artist = '$Artist' AND title = '$Title' AND year = $Year) B");
+		    $i = 0;
                     if($result === false){
                             throw new Exception(mysql_error($connection));
                      }
                     while ($row = mysql_fetch_array($result)) {
 	                    echo "<tr valign='middle'>";
-	                    echo "<td>".$row['name']."</td>";
+	                    echo "<td>".$row['artist']."</td>";
 	                    echo "<td>".$row['address']."</td>";
 	                    echo "</td>";
 	                    echo "</tr>";
